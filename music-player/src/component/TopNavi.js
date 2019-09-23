@@ -7,7 +7,7 @@ export default class TopNavi extends React.Component {
       <div>
         <Nav>
           <NavItem>
-            <NavLink href="http://localhost:3000/">앨범</NavLink>
+            <NavLink href="http://15.164.21.91:3000/">앨범</NavLink>
           </NavItem>
         </Nav>
         <hr />
