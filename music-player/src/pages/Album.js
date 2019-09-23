@@ -13,7 +13,7 @@ export class Album extends Component {
   _getAlbums = async () => {
     const {
       data: { result }
-    } = await axios.get("http://localhost:3065/album");
+    } = await axios.get("http://15.164.21.91:3000/album");
     this.setState({
       albums: result,
       isLoading: false

@@ -14,7 +14,7 @@ export class AlbumList extends Component {
   _getAlbumList = async id => {
     const {
       data: { result }
-    } = await axios.get(`http://15.164.21.91:33811/album/${id}`);
+    } = await axios.get(`http://15.164.21.91:3000/album/${id}`);
     this.setState({
       albums: result,
       isLoading: false
