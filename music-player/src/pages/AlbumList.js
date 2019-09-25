@@ -8,7 +8,8 @@ export class AlbumList extends Component {
   state = {
     albums: [],
     isLoading: true,
-    isPlaying: false
+    isPlaying: false,
+    playSongId: ""
   };
 
   _getAlbumList = async id => {
@@ -26,24 +27,24 @@ export class AlbumList extends Component {
     state
       ? this.state.isPlaying
         ? this._anotherSongStop(id)
-        : this._playingSetTrue()
+        : this._playingSetTrue(id)
       : this._playingSetFalse();
   };
 
   _playingSetTrue = () => {
-    console.log("하위 컴포넌트에서 audio.play() 가 실행됐을때");
+    console.log("셋트루");
     this.setState({ isPlaying: true });
   };
 
   _playingSetFalse = () => {
-    console.log("하위 컴포넌트에서 audio.pause() 가 실행됐을때");
+    console.log("셋펄스");
     this.setState({ isPlaying: false });
   };
 
   _anotherSongStop = id => {
+    console.log("나머지정지");
     this.setState({ isPlaying: true });
-    console.log("하위 컴포넌트에서 audio.play() 가 실행됐을때");
-    console.log(`${id}번째 곡을 제외한 나머지 곡을 멈춰야한다`);
+    this.setState({ playSongId: id });
 
     // 처음에는 isPlaying : false 로 유지한다.
     // 특정 하위 컴포넌트에서 this.state.play 가 true가 되면
@@ -63,7 +64,7 @@ export class AlbumList extends Component {
   }
 
   render() {
-    const { isLoading, albums } = this.state;
+    const { isLoading, albums, playSongId } = this.state;
     return (
       <section className="container">
         {isLoading ? (
@@ -86,14 +87,33 @@ export class AlbumList extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {albums[0].Songs.map((song, id) => (
-                    <SongList
-                      song={song}
-                      id={id}
-                      isPlaying={this.state.isPlaying}
-                      isPlayChange={this._isPlayChange}
-                    />
-                  ))}
+                  {console.log(playSongId)}
+                  {albums[0].Songs.map((song, id) =>
+                    playSongId ? (
+                      playSongId === id ? (
+                        <SongList
+                          song={song}
+                          id={id}
+                          isPlaying={true}
+                          isPlayChange={this._isPlayChange}
+                        />
+                      ) : (
+                        <SongList
+                          song={song}
+                          id={id}
+                          isPlaying={false}
+                          isPlayChange={this._isPlayChange}
+                        />
+                      )
+                    ) : (
+                      <SongList
+                        song={song}
+                        id={id}
+                        isPlaying={this.state.isPlaying}
+                        isPlayChange={this._isPlayChange}
+                      />
+                    )
+                  )}
                 </tbody>
               </Table>
             </div>

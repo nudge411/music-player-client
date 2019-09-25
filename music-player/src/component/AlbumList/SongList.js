@@ -8,22 +8,29 @@ export class SongList extends Component {
   audio = new Audio(this.props.song.url);
 
   togglePlay = (e, id) => {
-    this.setState({ play: !this.state.play }, () => {
-      this.state.play ? this.audio.play() : this.audio.pause();
-    });
     this.props.isPlayChange(id, !this.state.play);
+    this.setState({ play: !this.state.play }, () => {
+      this.state.play && this.props.isPlaying
+        ? this.audio.play()
+        : this.audio.pause();
+    });
   };
 
+  componentDidUpdate() {
+    this.state.play && this.props.isPlaying
+      ? this.audio.play()
+      : this.audio.pause();
+  }
+
   render() {
-    const { song, id } = this.props;
-    // const audio = new Audio(song.url);
+    const { song, id, isPlaying } = this.props;
     return (
       <tr key={id + 1}>
         <th scope="row">{id + 1}</th>
         <td>{song.title}</td>
         <td>
           <button onClick={e => this.togglePlay(e, id)}>
-            {this.state.play ? "Pause" : "Play"}
+            {this.state.play && isPlaying ? "Pause" : "Play"}
           </button>
         </td>
       </tr>
