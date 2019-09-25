@@ -9,6 +9,7 @@ export class AlbumList extends Component {
     albums: [],
     isLoading: true,
     isPlaying: false,
+    isNow: false,
     playSongId: ""
   };
 
@@ -23,39 +24,10 @@ export class AlbumList extends Component {
   };
 
   _isPlayChange = (id, state) => {
-    // 현재 play 여부와 하위 컴포넌트의 playState를 비교한다
-    state
-      ? this.state.isPlaying
-        ? this._anotherSongStop(id)
-        : this._playingSetTrue(id)
-      : this._playingSetFalse();
-  };
-
-  _playingSetTrue = () => {
-    console.log("셋트루");
-    this.setState({ isPlaying: true });
-  };
-
-  _playingSetFalse = () => {
-    console.log("셋펄스");
-    this.setState({ isPlaying: false });
-  };
-
-  _anotherSongStop = id => {
-    console.log("나머지정지");
-    this.setState({ isPlaying: true });
-    this.setState({ playSongId: id });
-
-    // 처음에는 isPlaying : false 로 유지한다.
-    // 특정 하위 컴포넌트에서 this.state.play 가 true가 되면
-    // 상위 컴포넌트의  isPlaying : true 로 셋한다.
-    // 여기서 다시 특정 하위 컴포넌트에서 this.state.play 가 true가 되면
-    // 상위 컴포넌트의 isPlaying 을 보러온다
-    // 만약 isPlaying : false 면 isPlaying : true 로 셋해준다.
-    // 만약 isPlaying : true 면
-
-    // 특정 하위 컴포넌트를 제외한 컴포넌트는 this.state.play 값을 false로 바꿔준다.
-    // 이 때 상위 컴포넌트와 하위컴포넌트의 state 와 props 를 어떻게 관리해야할까..
+    this.setState({
+      playSongId: id,
+      isNow: state
+    });
   };
 
   componentDidMount() {
@@ -87,29 +59,19 @@ export class AlbumList extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log(playSongId)}
                   {albums[0].Songs.map((song, id) =>
-                    playSongId ? (
-                      playSongId === id ? (
-                        <SongList
-                          song={song}
-                          id={id}
-                          isPlaying={true}
-                          isPlayChange={this._isPlayChange}
-                        />
-                      ) : (
-                        <SongList
-                          song={song}
-                          id={id}
-                          isPlaying={false}
-                          isPlayChange={this._isPlayChange}
-                        />
-                      )
+                    playSongId === id && !this.state.isNow ? (
+                      <SongList
+                        song={song}
+                        id={id}
+                        isPlaying={true}
+                        isPlayChange={this._isPlayChange}
+                      />
                     ) : (
                       <SongList
                         song={song}
                         id={id}
-                        isPlaying={this.state.isPlaying}
+                        isPlaying={false}
                         isPlayChange={this._isPlayChange}
                       />
                     )
