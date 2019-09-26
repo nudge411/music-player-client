@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Albums from "../component/Albums";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import axios from "axios";
 import "../css/Album.css";
@@ -31,7 +33,9 @@ export class Album extends Component {
       <section class="container">
         {isLoading ? (
           <div class="loader">
-            <span class="loder__text">Loading...</span>
+            <span class="loder__text">
+              <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+            </span>
           </div>
         ) : (
           <div class="albums">
