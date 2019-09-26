@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlayCircle, faPauseCircle } from "@fortawesome/free-solid-svg-icons";
 
 export class SongList extends Component {
   audio = new Audio(this.props.song.url);
@@ -14,9 +16,13 @@ export class SongList extends Component {
         <th scope="row">{id + 1}</th>
         <td>{song.title}</td>
         <td>
-          <button onClick={e => isPlayChange(id, isPlaying)}>
-            {isPlaying ? "Pause" : "Play"}
-          </button>
+          <div onClick={e => isPlayChange(id, isPlaying)}>
+            {isPlaying ? (
+              <FontAwesomeIcon icon={faPauseCircle} size="2x" />
+            ) : (
+              <FontAwesomeIcon icon={faPlayCircle} size="2x" />
+            )}
+          </div>
         </td>
       </tr>
     );
