@@ -14,7 +14,7 @@ export class SongList extends Component {
     return (
       <tr key={id + 1}>
         <th scope="row">{id + 1}</th>
-        <td>{song.title}</td>
+        <td className="song__title">{song.title}</td>
         <td>
           <div onClick={e => isPlayChange(id, isPlaying)}>
             {isPlaying ? (
