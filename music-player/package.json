@@ -23,7 +23,8 @@
     "build": "cross-env NODE_PATH=src react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "aws s3 sync ./build s3://nudge411-music-player --profile=nudge411"
+    "deploy": "aws s3 sync ./build s3://nudge411-music-player --profile=nudge411",
+    "invalidate": "aws cloudfront create-invalidation --profile=nudge411 --distribution-id E2T5HAKR57AN5W --paths / /index.html /error.html /service-worker.js /manifest.json /favicon.ico"
   },
   "eslintConfig": {
     "extends": "react-app"
